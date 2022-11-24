@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,      KC_Q,           KC_W,           LT(2,KC_E),     MT(MOD_LGUI, KC_R),KC_T,           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSPACE,      
     MT(MOD_LCTL, KC_TAB),KC_A,           MT(MOD_LSFT, KC_S),MT(MOD_LALT, KC_D),MT(MOD_LCTL, KC_F),MT(MOD_LGUI, KC_G),MT(MOD_LGUI, KC_H),MT(MOD_LCTL, KC_J),MT(MOD_LALT, KC_K),MT(MOD_LSFT, KC_L),KC_SCOLON,      KC_QUOTE,       
     KC_LSHIFT,      KC_Z,           KC_X,           KC_C,           LT(_LOWER, KC_V),KC_B,           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       TG(2),          
-    KC_INSERT,      TD(DANCE_0),    TT(6),          RAISE,          MO(4),          LT(_LOWER, KC_SPACE),KC_NO,          LT(_LOWER, KC_ENTER),MO(4),          KC_LPRN,        KC_RPRN,        TG(4)
+    KC_INSERT,      TD(DANCE_0),    TG(6),          RAISE,          MO(4),          LT(_LOWER, KC_SPACE),KC_NO,          LT(_LOWER, KC_ENTER),MO(4),          KC_LPRN,        KC_RPRN,        TG(4)
   ),
 
   [_LOWER] = LAYOUT_planck_grid(
@@ -198,6 +198,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         rgblight_mode(1);
       }
       return false;
+    case TG(_LAYER6):
+        if (record->event.pressed) {
+            // When going to the swedish layer we swap language mode
+            // (default keybinding in windows is Win+spacebar
+            register_mods(MOD_LGUI);
+            tap_code(KC_SPACE);
+            unregister_mods(MOD_LGUI);
+        }
+
+        break;
   }
   return true;
 }
